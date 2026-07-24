@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour 360°</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin/index.min.css">
+
+  <style>
+    body { margin: 0; }
+    #viewer { width: 100vw; height: 100vh; }
+
+    /* Ocultar loader nativo de PSV */
+    .psv-loader { display: none !important; }
+
+    /* Loader personalizado */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #loader.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+    #loader img {
+      width: 180px;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-user-drag: none;
+    }
+    #loader-barra-fondo {
+      width: 180px;
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    #loader-barra {
+      height: 100%;
+      width: 0%;
+      background: #76B82A;
+      border-radius: 3px;
+      transition: width 0.1s ease;
+    }
+
+    #nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    #nav button {
+      padding: 6px 12px;
+      background: #76B82A;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 26px;
+      font-family: sans-serif;
+      backdrop-filter: blur(4px);
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.4);
+      transition: background 0.2s ease;
+    }
+    #nav button:hover { background: #548a1e; }
+    #nav button:disabled {
+      background: rgba(118, 184, 42, 0.3);
+      cursor: default;
+      box-shadow: none;
+    }
+
+    #btn-atras {
+      background: none !important;
+      border: none !important;
+      padding: 0 !important;
+      cursor: pointer;
+      box-shadow: none !important;
+    }
+    #btn-atras img {
+      width: 46px;
+      height: 46px;
+      display: block;
+      transform: scaleX(-1);
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-user-drag: none;
+    }
+    #btn-atras img.hover { display: none; }
+    #btn-atras:hover:not(:disabled) img.normal { display: none; }
+    #btn-atras:hover:not(:disabled) img.hover { display: block; }
+    #btn-atras:disabled { opacity: 0.4; cursor: default; }
+
+    #btn-adelante {
+      background: none !important;
+      border: none !important;
+      padding: 0 !important;
+      cursor: pointer;
+      box-shadow: none !important;
+    }
+    #btn-adelante img {
+      width: 46px;
+      height: 46px;
+      display: block;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-user-drag: none;
+    }
+    #btn-adelante img.hover { display: none; }
+    #btn-adelante:hover:not(:disabled) img.normal { display: none; }
+    #btn-adelante:hover:not(:disabled) img.hover { display: block; }
+    #btn-adelante:disabled { opacity: 0.4; cursor: default; }
+
+    #dev-panel {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+    }
+    #dev-panel button {
+      padding: 8px 14px;
+      background: rgba(255, 80, 80, 0.85);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    #dev-coords {
+      background: rgba(0,0,0,0.75);
+      color: #76B82A;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: monospace;
+      display: none;
+    }
+
+    .marcador {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      /* el icono (50px) queda a la izquierda de la caja de 320px;
+         se corrige junto con anchor: 'left center' para que el
+         centro real del icono coincida con la coordenada dada */
+      transform: translateX(-25px);
+    }
+    .marcador img.normal { display: block; }
+    .marcador img.hover  { display: none; }
+    .marcador img {
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-user-drag: none;
+    }
+    .marcador:hover img.normal { display: none; }
+    .marcador:hover img.hover {
+      display: block;
+      filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+    }
+
+    .marcador-label {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      max-width: 0;
+      opacity: 0;
+      transition: max-width 0.4s ease, opacity 0.4s ease;
+      white-space: nowrap;
+      margin-left: 8px;
+    }
+    .marcador-label span {
+      background: #76B82A;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 26px;
+      font-family: sans-serif;
+      backdrop-filter: blur(4px);
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.4);
+    }
+    .marcador:hover .marcador-label {
+      max-width: 300px;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer"></div>
+
+  <!-- Loader personalizado -->
+  <div id="loader" class="visible">
+    <img src="fotos/logo.png" alt="Logo" draggable="false">
+    <div id="loader-barra-fondo">
+      <div id="loader-barra"></div>
+    </div>
+  </div>
+
+  <div id="nav">
+    <button id="btn-atras" onclick="irAtras()" disabled>
+      <img class="normal" src="fotos/circle2.png" alt="Atrás" draggable="false">
+      <img class="hover" src="fotos/circle3.png" alt="Atrás" draggable="false">
+    </button>
+    <button onclick="irA(primeraEscena(), false)">Inicio</button>
+    <button id="btn-adelante" onclick="irAdelante()" disabled>
+      <img class="normal" src="fotos/circle2.png" alt="Adelante" draggable="false">
+      <img class="hover" src="fotos/circle3.png" alt="Adelante" draggable="false">
+    </button>
+  </div>
+
+  <!-- Panel dev: cambiar MODO_DEV a false para producción -->
+  <div id="dev-panel">
+    <button onclick="mostrarCoordenadas()">📍 Ver coordenadas</button>
+    <div id="dev-coords"></div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three/build/three.module.js",
+        "@photo-sphere-viewer/core": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.module.js",
+        "@photo-sphere-viewer/markers-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin/index.module.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import { Viewer } from '@photo-sphere-viewer/core';
+    import { MarkersPlugin } from '@photo-sphere-viewer/markers-plugin';
+    import { escenas, marcadorHTML, gifHTML } from './datos.js';
+
+    // ← cambiar a false para producción
+    const MODO_DEV = true;
+
+    if (!MODO_DEV) {
+      document.getElementById('dev-panel').style.display = 'none';
+    }
+
+    // ← definir el orden del recorrido guiado aquí
+    const recorrido = [];
+
+    // Primera escena del tour
+    window.primeraEscena = function() {
+      return recorrido[0] || Object.keys(escenas)[0];
+    };
+
+    const loader = document.getElementById('loader');
+    const loaderBarra = document.getElementById('loader-barra');
+
+    function mostrarLoader() {
+      loaderBarra.style.width = '0%';
+      loader.classList.add('visible');
+      let progreso = 0;
+      const intervalo = setInterval(() => {
+        progreso += Math.random() * 15;
+        if (progreso >= 90) {
+          progreso = 90;
+          clearInterval(intervalo);
+        }
+        loaderBarra.style.width = progreso + '%';
+      }, 100);
+      return intervalo;
+    }
+
+    function ocultarLoader(intervalo) {
+      clearInterval(intervalo);
+      loaderBarra.style.width = '100%';
+      setTimeout(() => {
+        loader.classList.remove('visible');
+      }, 300);
+    }
+
+    const historial = [];
+    let escenaActual = primeraEscena();
+
+    const intervaloInicial = mostrarLoader();
+
+    const primeraEscenaData = escenas[escenaActual];
+
+    const viewer = new Viewer({
+      container: document.querySelector('#viewer'),
+      panorama: primeraEscenaData.panorama,
+      navbar: false,
+      defaultYaw: primeraEscenaData.defaultYaw,
+      defaultPitch: primeraEscenaData.defaultPitch,
+      plugins: [
+        [MarkersPlugin, { markers: primeraEscenaData.markers }],
+      ],
+    });
+
+    const markersPlugin = viewer.getPlugin(MarkersPlugin);
+
+    viewer.addEventListener('ready', () => {
+      ocultarLoader(intervaloInicial);
+      actualizarBotones();
+    });
+
+    function actualizarBotones() {
+      document.getElementById('btn-atras').disabled = historial.length === 0;
+      const idx = recorrido.indexOf(escenaActual);
+      document.getElementById('btn-adelante').disabled = idx === -1 || idx === recorrido.length - 1;
+    }
+
+    function navegarA(escenaId) {
+      const escena = escenas[escenaId];
+      const intervalo = mostrarLoader();
+      viewer.setPanorama(escena.panorama, {
+        position: { yaw: escena.defaultYaw, pitch: escena.defaultPitch },
+      }).then(() => {
+        markersPlugin.setMarkers(escena.markers);
+        ocultarLoader(intervalo);
+      });
+    }
+
+    window.irA = function(escenaId, guardarHistorial = true) {
+      if (guardarHistorial) {
+        historial.push(escenaActual);
+      } else {
+        historial.length = 0;
+      }
+      escenaActual = escenaId;
+      actualizarBotones();
+      navegarA(escenaId);
+    };
+
+    window.irAtras = function() {
+      if (historial.length === 0) return;
+      const anterior = historial.pop();
+      escenaActual = anterior;
+      actualizarBotones();
+      navegarA(anterior);
+    };
+
+    window.irAdelante = function() {
+      const idx = recorrido.indexOf(escenaActual);
+      if (idx === -1 || idx === recorrido.length - 1) return;
+      const siguiente = recorrido[idx + 1];
+      historial.push(escenaActual);
+      escenaActual = siguiente;
+      actualizarBotones();
+      navegarA(siguiente);
+    };
+
+    window.mostrarCoordenadas = function() {
+      const pos = viewer.getPosition();
+      const yaw = (pos.yaw * 180 / Math.PI).toFixed(2);
+      const pitch = (pos.pitch * 180 / Math.PI).toFixed(2);
+      const coords = document.getElementById('dev-coords');
+      coords.style.display = 'block';
+      coords.innerHTML = `escena: ${escenaActual}<br>yaw: ${yaw}deg<br>pitch: ${pitch}deg`;
+    };
+  </script>
+</body>
+</html>
