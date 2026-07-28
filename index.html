@@ -391,6 +391,20 @@
       navegarA(siguiente);
     };
 
+    // Los marcadores no usan onclick nativo: en varios navegadores móviles,
+    // un elemento con estilo :hover requiere un primer toque para activar el
+    // hover y un segundo para disparar el click. Manejando touchend/click
+    // manualmente (con preventDefault en touchend para evitar el click
+    // sintetizado duplicado) el marcador navega con un solo toque.
+    function manejarTapMarcador(e) {
+      const el = e.target.closest('[data-destino]');
+      if (!el) return;
+      e.preventDefault();
+      irA(el.dataset.destino);
+    }
+    document.getElementById('viewer').addEventListener('touchend', manejarTapMarcador);
+    document.getElementById('viewer').addEventListener('click', manejarTapMarcador);
+
     window.mostrarCoordenadas = function() {
       const pos = viewer.getPosition();
       const yaw = (pos.yaw * 180 / Math.PI).toFixed(2);

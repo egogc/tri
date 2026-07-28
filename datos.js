@@ -19,11 +19,11 @@ export function marcadorHTML(label, escenaDestino, direccion = 'derecha', icono 
   const estilo = transformDir[direccion] || '';
   return `
     <div class="marcador">
-      <div class="${claseIcono(icono)}" onclick="irA('${escenaDestino}')">
+      <div class="${claseIcono(icono)}" data-destino="${escenaDestino}">
         <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
         <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
       </div>
-      <div class="marcador-label" onclick="irA('${escenaDestino}')">
+      <div class="marcador-label" data-destino="${escenaDestino}">
         <span>${label}</span>
       </div>
     </div>`;
@@ -33,11 +33,11 @@ export function marcadorImagenHTML(imagenSrc, escenaDestino, direccion = 'derech
   const estilo = transformDir[direccion] || '';
   return `
     <div class="marcador">
-      <div class="${claseIcono(icono)}" onclick="irA('${escenaDestino}')">
+      <div class="${claseIcono(icono)}" data-destino="${escenaDestino}">
         <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
         <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
       </div>
-      <div class="marcador-label" onclick="irA('${escenaDestino}')">
+      <div class="marcador-label" data-destino="${escenaDestino}">
         <img src="${imagenSrc}">
       </div>
     </div>`;
@@ -47,7 +47,7 @@ export function gifHTML(escenaDestino, direccion = 'derecha', icono = iconoDefau
   const estilo = transformDir[direccion] || '';
   return `
     <div class="marcador">
-      <div class="${claseIcono(icono)}" onclick="irA('${escenaDestino}')">
+      <div class="${claseIcono(icono)}" data-destino="${escenaDestino}">
         <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
         <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
       </div>
