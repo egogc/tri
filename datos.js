@@ -18,12 +18,12 @@ function claseIcono(icono) {
 export function marcadorHTML(label, escenaDestino, direccion = 'derecha', icono = iconoDefault) {
   const estilo = transformDir[direccion] || '';
   return `
-    <div class="marcador" onclick="irA('${escenaDestino}')">
-      <div class="${claseIcono(icono)}">
+    <div class="marcador">
+      <div class="${claseIcono(icono)}" onclick="irA('${escenaDestino}')">
         <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
         <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
       </div>
-      <div class="marcador-label">
+      <div class="marcador-label" onclick="irA('${escenaDestino}')">
         <span>${label}</span>
       </div>
     </div>`;
@@ -32,12 +32,12 @@ export function marcadorHTML(label, escenaDestino, direccion = 'derecha', icono 
 export function marcadorImagenHTML(imagenSrc, escenaDestino, direccion = 'derecha', icono = iconoDefault) {
   const estilo = transformDir[direccion] || '';
   return `
-    <div class="marcador" onclick="irA('${escenaDestino}')">
-      <div class="${claseIcono(icono)}">
+    <div class="marcador">
+      <div class="${claseIcono(icono)}" onclick="irA('${escenaDestino}')">
         <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
         <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
       </div>
-      <div class="marcador-label">
+      <div class="marcador-label" onclick="irA('${escenaDestino}')">
         <img src="${imagenSrc}">
       </div>
     </div>`;
@@ -46,8 +46,8 @@ export function marcadorImagenHTML(imagenSrc, escenaDestino, direccion = 'derech
 export function gifHTML(escenaDestino, direccion = 'derecha', icono = iconoDefault) {
   const estilo = transformDir[direccion] || '';
   return `
-    <div class="marcador" onclick="irA('${escenaDestino}')">
-      <div class="${claseIcono(icono)}">
+    <div class="marcador">
+      <div class="${claseIcono(icono)}" onclick="irA('${escenaDestino}')">
         <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
         <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
       </div>
@@ -107,7 +107,7 @@ export const escenas = {
       {
         id: 'e01-a-e07',
         position: { yaw: '253.07deg', pitch: '-27.51deg' },
-        html: marcadorHTML('Yariguies', 'e07', 'derecha', iconoE01),
+        html: marcadorHTML("Henry's Parrilla", 'e07', 'derecha', iconoE01),
         size: { width: 320, height: 80 },
         anchor: 'left center',
       },
