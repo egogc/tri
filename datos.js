@@ -9,13 +9,19 @@ const transformDir = {
   abajo: 'transform: rotate(90deg);',
 };
 
-export function marcadorHTML(label, escenaDestino, direccion = 'derecha') {
+const iconoDefault = { normal: 'fotos/circle.gif', hover: 'fotos/circle2.png', width: 50, height: 50 };
+
+function claseIcono(icono) {
+  return icono.sombra ? 'marcador-icono con-sombra' : 'marcador-icono';
+}
+
+export function marcadorHTML(label, escenaDestino, direccion = 'derecha', icono = iconoDefault) {
   const estilo = transformDir[direccion] || '';
   return `
     <div class="marcador" onclick="irA('${escenaDestino}')">
-      <div>
-        <img class="normal" src="fotos/circle.gif" width="50" height="50">
-        <img class="hover"  src="fotos/circle2.png" width="50" height="50" style="${estilo}">
+      <div class="${claseIcono(icono)}">
+        <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
+        <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
       </div>
       <div class="marcador-label">
         <span>${label}</span>
@@ -23,16 +29,32 @@ export function marcadorHTML(label, escenaDestino, direccion = 'derecha') {
     </div>`;
 }
 
-export function gifHTML(escenaDestino, direccion = 'derecha') {
+export function marcadorImagenHTML(imagenSrc, escenaDestino, direccion = 'derecha', icono = iconoDefault) {
   const estilo = transformDir[direccion] || '';
   return `
     <div class="marcador" onclick="irA('${escenaDestino}')">
-      <div>
-        <img class="normal" src="fotos/circle.gif" width="50" height="50">
-        <img class="hover"  src="fotos/circle2.png" width="50" height="50" style="${estilo}">
+      <div class="${claseIcono(icono)}">
+        <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
+        <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
+      </div>
+      <div class="marcador-label">
+        <img src="${imagenSrc}">
       </div>
     </div>`;
 }
+
+export function gifHTML(escenaDestino, direccion = 'derecha', icono = iconoDefault) {
+  const estilo = transformDir[direccion] || '';
+  return `
+    <div class="marcador" onclick="irA('${escenaDestino}')">
+      <div class="${claseIcono(icono)}">
+        <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
+        <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
+      </div>
+    </div>`;
+}
+
+const iconoE01 = { normal: 'fotos/pin.gif', hover: 'fotos/pin2.png', width: 50, height: 80, sombra: true };
 
 export const escenas = {
   e01: {
@@ -43,57 +65,57 @@ export const escenas = {
       {
         id: 'e01-a-e03',
         position: { yaw: '237.97deg', pitch: '-30.91deg' },
-        html: marcadorHTML('Parqueaderos', 'e03'),
-        size: { width: 320, height: 50 },
+        html: marcadorHTML('Parqueaderos', 'e03', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e02',
         position: { yaw: '234.07deg', pitch: '-52.98deg' },
-        html: gifHTML('e02'),
-        size: { width: 320, height: 50 },
+        html: gifHTML('e02', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e04',
         position: { yaw: '248.51deg', pitch: '-36.65deg' },
-        html: gifHTML('e04'),
-        size: { width: 320, height: 50 },
+        html: gifHTML('e04', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e05',
         position: { yaw: '260.50deg', pitch: '-32.55deg' },
-        html: marcadorHTML('Entrada', 'e05'),
-        size: { width: 320, height: 50 },
+        html: marcadorHTML('Entrada', 'e05', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e18',
         position: { yaw: '272.64deg', pitch: '-38.82deg' },
-        html: marcadorHTML('Twister', 'e18'),
-        size: { width: 320, height: 50 },
+        html: marcadorImagenHTML('fotos/twister.webp', 'e18', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e20',
         position: { yaw: '274.58deg', pitch: '-32.25deg' },
-        html: marcadorHTML('Spa Aquayari', 'e20'),
-        size: { width: 320, height: 50 },
+        html: marcadorImagenHTML('fotos/spa.webp', 'e20', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e07',
         position: { yaw: '253.07deg', pitch: '-27.51deg' },
-        html: marcadorHTML('Yariguies', 'e07'),
-        size: { width: 320, height: 50 },
+        html: marcadorHTML('Yariguies', 'e07', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e39',
         position: { yaw: '294.97deg', pitch: '-53.70deg' },
-        html: marcadorHTML('Piscinas', 'e39'),
-        size: { width: 320, height: 50 },
+        html: marcadorHTML('Piscinas', 'e39', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
         anchor: 'left center',
       },
     ],

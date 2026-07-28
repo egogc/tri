@@ -154,6 +154,15 @@
       display: none;
     }
 
+    /* PSV envuelve cada marcador en su propio contenedor (.psv-marker--normal,
+       320x50/80px, position:absolute) con pointer-events:auto por defecto.
+       Con varios marcadores cercanos, esa caja invisible de uno puede quedar
+       encima (según z-index) tapando el icono real de otro. Se desactiva aquí
+       y se reactiva solo en el icono/tooltip (ver .marcador-icono/.marcador-label). */
+    .psv-marker--normal {
+      pointer-events: none;
+    }
+
     .marcador {
       display: flex;
       align-items: center;
@@ -162,6 +171,13 @@
          se corrige junto con anchor: 'left center' para que el
          centro real del icono coincida con la coordenada dada */
       transform: translateX(-25px);
+      /* solo el icono (y, una vez visible, el tooltip) deben responder
+         al mouse; el resto de esta caja de 320px es espacio reservado
+         para la expansión del tooltip, no debe ser interactivo */
+      pointer-events: none;
+    }
+    .marcador-icono {
+      pointer-events: auto;
     }
     .marcador img.normal { display: block; }
     .marcador img.hover  { display: none; }
@@ -176,6 +192,9 @@
       display: block;
       filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
     }
+    .con-sombra img.normal {
+      filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+    }
 
     .marcador-label {
       display: flex;
@@ -186,6 +205,9 @@
       transition: max-width 0.4s ease, opacity 0.4s ease;
       white-space: nowrap;
       margin-left: 8px;
+      /* al estar colapsado (max-width: 0) no ocupa área real, así que
+         esto no habilita interacción hasta que el hover del icono lo expanda */
+      pointer-events: auto;
     }
     .marcador-label span {
       background: #76B82A;
@@ -196,6 +218,12 @@
       font-family: sans-serif;
       backdrop-filter: blur(4px);
       box-shadow: 0px 4px 6px rgba(0,0,0,0.4);
+    }
+    .marcador-label img {
+      height: 50px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
     }
     .marcador:hover .marcador-label {
       max-width: 300px;
@@ -264,8 +292,10 @@
 
     const loader = document.getElementById('loader');
     const loaderBarra = document.getElementById('loader-barra');
+    const loaderLogo = document.querySelector('#loader img');
 
-    function mostrarLoader() {
+    function mostrarLoader(escenaId) {
+      loaderLogo.style.display = escenaId === 'e01' ? '' : 'none';
       loaderBarra.style.width = '0%';
       loader.classList.add('visible');
       let progreso = 0;
@@ -291,7 +321,7 @@
     const historial = [];
     let escenaActual = primeraEscena();
 
-    const intervaloInicial = mostrarLoader();
+    const intervaloInicial = mostrarLoader(escenaActual);
 
     const primeraEscenaData = escenas[escenaActual];
 
@@ -321,7 +351,7 @@
 
     function navegarA(escenaId) {
       const escena = escenas[escenaId];
-      const intervalo = mostrarLoader();
+      const intervalo = mostrarLoader(escenaId);
       viewer.setPanorama(escena.panorama, {
         position: { yaw: escena.defaultYaw, pitch: escena.defaultPitch },
       }).then(() => {
