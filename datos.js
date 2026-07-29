@@ -74,6 +74,16 @@ export const paneles = [
       'Carreras acuáticas',
     ],
   },
+  {
+    id: 'e88',
+    logo: 'fotos/aguakids.webp',
+    caracteristicas: [
+      '3 toboganes',
+      'Rodadero',
+      'Chorros sorpresa',
+      'Caída de agua',
+    ],
+  },
 ];
 
 // pin.gif mide 50x80px, pero el contenido visible (la punta del pin)
@@ -81,6 +91,9 @@ export const paneles = [
 // la caja: el anchor ('left center') apunta al centro de la caja (y=40),
 // no a la punta real del pin. ajusteVertical corrige ese desfase.
 const iconoE01 = { normal: 'fotos/pin.gif', hover: 'fotos/pin2.png', width: 50, height: 80, sombra: true, ajusteVertical: 29 };
+
+// marcadores hacia tomas aéreas (fuera de e01): mismo icono normal, hover circle5.png
+const iconoAerea = { normal: 'fotos/circle.gif', hover: 'fotos/circle5.png', width: 50, height: 50 };
 
 export const escenas = {
   e01: {
@@ -148,6 +161,13 @@ export const escenas = {
         id: 'e01-a-e88',
         position: { yaw: '278.74deg', pitch: '-48.60deg' },
         html: marcadorImagenHTML('fotos/aguakids.webp', 'e88', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e01-a-e52',
+        position: { yaw: '294.67deg', pitch: '-34.10deg' },
+        html: marcadorHTML('Mirador de Topocoro', 'e52', 'derecha', iconoE01),
         size: { width: 320, height: 80 },
         anchor: 'left center',
       },
@@ -514,7 +534,20 @@ export const escenas = {
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
+      {
+        id: 'e18-a-e37b',
+        position: { yaw: '72.62deg', pitch: '33.46deg' },
+        html: gifHTML('e37b', null, iconoAerea),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
     ],
+  },
+  e37b: {
+    panorama: 'fotos/Aereas/37b.jpg',
+    defaultYaw: '199.70deg',
+    defaultPitch: '-34.09deg',
+    markers: [],
   },
   e19: {
     panorama: 'fotos/Entrada/19.jpg',
@@ -550,13 +583,348 @@ export const escenas = {
         anchor: 'left center',
       },
       {
-        id: 'e19-a-e37',
-        position: { yaw: '41.13deg', pitch: '-0.24deg' },
-        html: gifHTML('e37'),
+        id: 'e19-a-e37b',
+        position: { yaw: '131.71deg', pitch: '36.01deg' },
+        html: gifHTML('e37b', null, iconoAerea),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e19-a-e50',
+        position: { yaw: '40.40deg', pitch: '0.19deg' },
+        html: gifHTML('e50'),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
     ],
+  },
+  e50: {
+    panorama: 'fotos/Mirador/50.jpg',
+    defaultYaw: '47.04deg',
+    defaultPitch: '-4.43deg',
+    markers: [
+      {
+        id: 'e50-a-e51',
+        position: { yaw: '44.06deg', pitch: '-0.87deg' },
+        html: gifHTML('e51'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e50-a-e19',
+        position: { yaw: '224.42deg', pitch: '-3.37deg' },
+        html: gifHTML('e19'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e50-a-e52',
+        position: { yaw: '316.50deg', pitch: '-13.56deg' },
+        html: gifHTML('e52', 'abajo'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e50-a-e60',
+        position: { yaw: '136.84deg', pitch: '-2.34deg' },
+        html: gifHTML('e60'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e52: {
+    panorama: 'fotos/Mirador/52.jpg',
+    defaultYaw: '0deg',
+    defaultPitch: '0deg',
+    markers: [
+      {
+        id: 'e52-a-e55',
+        position: { yaw: '33.72deg', pitch: '-3.15deg' },
+        html: gifHTML('e55'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e52-a-e57',
+        position: { yaw: '233.52deg', pitch: '-1.22deg' },
+        html: gifHTML('e57'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e52-a-e50',
+        position: { yaw: '135.25deg', pitch: '9.67deg' },
+        html: gifHTML('e50', 'arriba'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e55: {
+    panorama: 'fotos/Mirador/55.jpg',
+    defaultYaw: '20.85deg',
+    defaultPitch: '-3.83deg',
+    markers: [
+      {
+        id: 'e55-a-e52',
+        position: { yaw: '215.49deg', pitch: '-4.95deg' },
+        html: gifHTML('e52'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e55-a-e56',
+        position: { yaw: '48.71deg', pitch: '-2.77deg' },
+        html: gifHTML('e56'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e60: {
+    panorama: 'fotos/Mirador/60.jpg',
+    defaultYaw: '131.95deg',
+    defaultPitch: '-8.03deg',
+    markers: [
+      {
+        id: 'e60-a-e38',
+        position: { yaw: '151.58deg', pitch: '-3.23deg' },
+        html: gifHTML('e38'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e56: {
+    panorama: 'fotos/Mirador/56.jpg',
+    defaultYaw: '0deg',
+    defaultPitch: '0deg',
+    markers: [
+      {
+        id: 'e56-a-e55',
+        position: { yaw: '184.85deg', pitch: '-2.88deg' },
+        html: gifHTML('e55'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e57: {
+    panorama: 'fotos/Mirador/57.jpg',
+    defaultYaw: '212.51deg',
+    defaultPitch: '-4.93deg',
+    markers: [
+      {
+        id: 'e57-a-e58',
+        position: { yaw: '219.26deg', pitch: '-0.74deg' },
+        html: gifHTML('e58'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e57-a-e52',
+        position: { yaw: '47.85deg', pitch: '-4.77deg' },
+        html: gifHTML('e52'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e58: {
+    panorama: 'fotos/Mirador/58.jpg',
+    defaultYaw: '188.73deg',
+    defaultPitch: '-6.35deg',
+    markers: [
+      {
+        id: 'e58-a-e57',
+        position: { yaw: '42.10deg', pitch: '-4.21deg' },
+        html: gifHTML('e57'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e58-a-e20',
+        position: { yaw: '216.03deg', pitch: '-19.15deg' },
+        html: gifHTML('e20'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e51: {
+    panorama: 'fotos/Mirador/51.jpg',
+    defaultYaw: '41.57deg',
+    defaultPitch: '-5.82deg',
+    markers: [
+      {
+        id: 'e51-a-e50',
+        position: { yaw: '216.17deg', pitch: '-3.13deg' },
+        html: gifHTML('e50'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e51-a-e53',
+        position: { yaw: '46.22deg', pitch: '-13.92deg' },
+        html: gifHTML('e53', 'abajo'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e53: {
+    panorama: 'fotos/Mirador/53.jpg',
+    defaultYaw: '0deg',
+    defaultPitch: '0deg',
+    markers: [
+      {
+        id: 'e53-a-e51',
+        position: { yaw: '219.43deg', pitch: '16.26deg' },
+        html: gifHTML('e51', 'arriba'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e53-a-e54',
+        position: { yaw: '346.15deg', pitch: '-3.70deg' },
+        html: gifHTML('e54'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e54: {
+    panorama: 'fotos/Mirador/54.jpg',
+    defaultYaw: '0deg',
+    defaultPitch: '0deg',
+    markers: [
+      {
+        id: 'e54-a-e53',
+        position: { yaw: '158.42deg', pitch: '-2.25deg' },
+        html: gifHTML('e53'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e54-a-e59',
+        position: { yaw: '236.14deg', pitch: '-2.79deg' },
+        html: gifHTML('e59'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e59: {
+    panorama: 'fotos/Mirador/59.jpg',
+    defaultYaw: '223.80deg',
+    defaultPitch: '-4.24deg',
+    markers: [
+      {
+        id: 'e59-a-e54',
+        position: { yaw: '49.62deg', pitch: '-5.14deg' },
+        html: gifHTML('e54'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e59-a-e62',
+        position: { yaw: '226.10deg', pitch: '-1.81deg' },
+        html: gifHTML('e62'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e62: {
+    panorama: 'fotos/Mirador/62.jpg',
+    defaultYaw: '221.94deg',
+    defaultPitch: '-2.41deg',
+    markers: [
+      {
+        id: 'e62-a-e63',
+        position: { yaw: '221.94deg', pitch: '-2.41deg' },
+        html: gifHTML('e63'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e62-a-e59',
+        position: { yaw: '47.25deg', pitch: '-5.50deg' },
+        html: gifHTML('e59'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e63: {
+    panorama: 'fotos/Mirador/63.jpg',
+    defaultYaw: '223.05deg',
+    defaultPitch: '-1.57deg',
+    markers: [
+      {
+        id: 'e63-a-e62',
+        position: { yaw: '46.41deg', pitch: '-3.52deg' },
+        html: gifHTML('e62'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e63-a-e64',
+        position: { yaw: '223.05deg', pitch: '-1.57deg' },
+        html: gifHTML('e64'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e64: {
+    panorama: 'fotos/Mirador/64.jpg',
+    defaultYaw: '217.95deg',
+    defaultPitch: '-4.86deg',
+    markers: [
+      {
+        id: 'e64-a-e63',
+        position: { yaw: '38.68deg', pitch: '-1.81deg' },
+        html: gifHTML('e63'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e64-a-e65',
+        position: { yaw: '234.44deg', pitch: '-3.78deg' },
+        html: gifHTML('e65'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e65: {
+    panorama: 'fotos/Mirador/65.jpg',
+    defaultYaw: '194.55deg',
+    defaultPitch: '-4.70deg',
+    markers: [
+      {
+        id: 'e65-a-e20',
+        position: { yaw: '203.66deg', pitch: '-2.15deg' },
+        html: gifHTML('e20'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e65-a-e64',
+        position: { yaw: '88.78deg', pitch: '-3.16deg' },
+        html: gifHTML('e64'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e61: {
+    panorama: 'fotos/Mirador/61.jpg',
+    defaultYaw: '0deg',
+    defaultPitch: '0deg',
+    markers: [],
   },
   e20: {
     panorama: 'fotos/Spa/20.jpg',
@@ -574,6 +942,13 @@ export const escenas = {
         id: 'e20-a-e21',
         position: { yaw: '197.07deg', pitch: '-2.61deg' },
         html: gifHTML('e21'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e20-a-e65',
+        position: { yaw: '25.57deg', pitch: '-1.88deg' },
+        html: gifHTML('e65'),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
