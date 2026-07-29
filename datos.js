@@ -9,16 +9,25 @@ const transformDir = {
   abajo: 'transform: rotate(90deg);',
 };
 
+// circle2.png (la flecha) se usa cuando el marcador tiene una orientación
+// explícita (derecha/izquierda/arriba/abajo); circle4.png es el hover
+// genérico para cuando no se especifica orientación. No aplica a e01
+// (esas escenas siempre pasan icono explícito, ver iconoE01 más abajo).
 const iconoDefault = { normal: 'fotos/circle.gif', hover: 'fotos/circle2.png', width: 50, height: 50 };
+const iconoSinDireccion = { normal: 'fotos/circle.gif', hover: 'fotos/circle4.png', width: 50, height: 50 };
 
 function claseIcono(icono) {
   return icono.sombra ? 'marcador-icono con-sombra' : 'marcador-icono';
 }
 
-export function marcadorHTML(label, escenaDestino, direccion = 'derecha', icono = iconoDefault) {
-  const estilo = transformDir[direccion] || '';
+function claseMarcador(icono) {
+  return icono.ajusteVertical ? 'marcador marcador--ajuste-vertical' : 'marcador';
+}
+
+export function marcadorHTML(label, escenaDestino, direccion = null, icono = (direccion ? iconoDefault : iconoSinDireccion)) {
+  const estilo = direccion ? (transformDir[direccion] || '') : '';
   return `
-    <div class="marcador">
+    <div class="${claseMarcador(icono)}">
       <div class="${claseIcono(icono)}" data-destino="${escenaDestino}">
         <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
         <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
@@ -29,10 +38,10 @@ export function marcadorHTML(label, escenaDestino, direccion = 'derecha', icono 
     </div>`;
 }
 
-export function marcadorImagenHTML(imagenSrc, escenaDestino, direccion = 'derecha', icono = iconoDefault) {
-  const estilo = transformDir[direccion] || '';
+export function marcadorImagenHTML(imagenSrc, escenaDestino, direccion = null, icono = (direccion ? iconoDefault : iconoSinDireccion)) {
+  const estilo = direccion ? (transformDir[direccion] || '') : '';
   return `
-    <div class="marcador">
+    <div class="${claseMarcador(icono)}">
       <div class="${claseIcono(icono)}" data-destino="${escenaDestino}">
         <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
         <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
@@ -43,10 +52,10 @@ export function marcadorImagenHTML(imagenSrc, escenaDestino, direccion = 'derech
     </div>`;
 }
 
-export function gifHTML(escenaDestino, direccion = 'derecha', icono = iconoDefault) {
-  const estilo = transformDir[direccion] || '';
+export function gifHTML(escenaDestino, direccion = null, icono = (direccion ? iconoDefault : iconoSinDireccion)) {
+  const estilo = direccion ? (transformDir[direccion] || '') : '';
   return `
-    <div class="marcador">
+    <div class="${claseMarcador(icono)}">
       <div class="${claseIcono(icono)}" data-destino="${escenaDestino}">
         <img class="normal" src="${icono.normal}" width="${icono.width}" height="${icono.height}">
         <img class="hover"  src="${icono.hover}" width="${icono.width}" height="${icono.height}" style="${estilo}">
@@ -54,7 +63,24 @@ export function gifHTML(escenaDestino, direccion = 'derecha', icono = iconoDefau
     </div>`;
 }
 
-const iconoE01 = { normal: 'fotos/pin.gif', hover: 'fotos/pin2.png', width: 50, height: 80, sombra: true };
+export const paneles = [
+  {
+    id: 'e18',
+    logo: 'fotos/twister.webp',
+    caracteristicas: [
+      '4 Toboganes',
+      'Giros en embudo',
+      'Descensos en espiral',
+      'Carreras acuáticas',
+    ],
+  },
+];
+
+// pin.gif mide 50x80px, pero el contenido visible (la punta del pin)
+// termina en el pixel 69, es decir 29px por encima del borde inferior de
+// la caja: el anchor ('left center') apunta al centro de la caja (y=40),
+// no a la punta real del pin. ajusteVertical corrige ese desfase.
+const iconoE01 = { normal: 'fotos/pin.gif', hover: 'fotos/pin2.png', width: 50, height: 80, sombra: true, ajusteVertical: 29 };
 
 export const escenas = {
   e01: {
@@ -72,14 +98,14 @@ export const escenas = {
       {
         id: 'e01-a-e02',
         position: { yaw: '234.07deg', pitch: '-52.98deg' },
-        html: gifHTML('e02', 'derecha', iconoE01),
+        html: marcadorHTML('Entrada vehicular', 'e02', 'derecha', iconoE01),
         size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e04',
         position: { yaw: '248.51deg', pitch: '-36.65deg' },
-        html: gifHTML('e04', 'derecha', iconoE01),
+        html: marcadorHTML('Monumento', 'e04', 'derecha', iconoE01),
         size: { width: 320, height: 80 },
         anchor: 'left center',
       },
@@ -92,21 +118,21 @@ export const escenas = {
       },
       {
         id: 'e01-a-e18',
-        position: { yaw: '272.64deg', pitch: '-38.82deg' },
+        position: { yaw: '273.77deg', pitch: '-37.77deg' },
         html: marcadorImagenHTML('fotos/twister.webp', 'e18', 'derecha', iconoE01),
         size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e20',
-        position: { yaw: '274.58deg', pitch: '-32.25deg' },
+        position: { yaw: '272.64deg', pitch: '-31.74deg' },
         html: marcadorImagenHTML('fotos/spa.webp', 'e20', 'derecha', iconoE01),
         size: { width: 320, height: 80 },
         anchor: 'left center',
       },
       {
         id: 'e01-a-e07',
-        position: { yaw: '253.07deg', pitch: '-27.51deg' },
+        position: { yaw: '254.22deg', pitch: '-27.21deg' },
         html: marcadorHTML("Henry's Parrilla", 'e07', 'derecha', iconoE01),
         size: { width: 320, height: 80 },
         anchor: 'left center',
@@ -118,7 +144,20 @@ export const escenas = {
         size: { width: 320, height: 80 },
         anchor: 'left center',
       },
+      {
+        id: 'e01-a-e88',
+        position: { yaw: '278.74deg', pitch: '-48.60deg' },
+        html: marcadorImagenHTML('fotos/aguakids.webp', 'e88', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
+        anchor: 'left center',
+      },
     ],
+  },
+  e88: {
+    panorama: 'fotos/AquaKids/88.jpg',
+    defaultYaw: '0deg',
+    defaultPitch: '0deg',
+    markers: [],
   },
   e02: {
     panorama: 'fotos/Entrada/02.jpg',

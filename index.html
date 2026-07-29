@@ -176,6 +176,12 @@
          para la expansión del tooltip, no debe ser interactivo */
       pointer-events: none;
     }
+    /* algunos iconos (ej. pin.gif en e01) tienen su punta visual desplazada
+       del centro de su propia caja; ajusteVertical (en datos.js) corrige
+       ese desfase agregando esta clase, sin afectar al resto de marcadores */
+    .marcador--ajuste-vertical {
+      transform: translateX(-25px) translateY(-29px);
+    }
     .marcador-icono {
       pointer-events: auto;
       cursor: pointer;
@@ -231,6 +237,91 @@
       max-width: 300px;
       opacity: 1;
     }
+
+    #panel-info {
+      position: fixed;
+      top: 60px;
+      left: 60px;
+      z-index: 998;
+      width: 340px;
+      max-width: calc(100vw - 80px);
+      box-sizing: border-box;
+      background: #76B82A;
+      border-radius: 16px;
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.4);
+      padding: 36px;
+      font-family: sans-serif;
+      color: white;
+      opacity: 0;
+      transform: translateX(-40px);
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+    #panel-info.visible {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: all;
+    }
+    #panel-info-cerrar {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #548a1e;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    #panel-info-logo {
+      display: block;
+      max-width: 100%;
+      margin-bottom: 28px;
+    }
+    #panel-info-lista {
+      margin: 0;
+      padding-left: 22px;
+      font-size: 24px;
+      font-family: sans-serif;
+    }
+    #panel-info-lista li {
+      margin-bottom: 12px;
+    }
+    #panel-info-lista li::marker {
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      #panel-info {
+        top: 20px;
+        left: 20px;
+        width: auto;
+        max-width: calc(100vw - 40px);
+        max-height: calc(100vh - 40px);
+        padding: 20px;
+      }
+      #panel-info-cerrar {
+        top: 10px;
+        right: 10px;
+      }
+      #panel-info-logo {
+        margin-bottom: 16px;
+      }
+      #panel-info-lista {
+        font-size: 18px;
+      }
+      #panel-info-lista li {
+        margin-bottom: 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -256,6 +347,13 @@
     </button>
   </div>
 
+  <!-- Panel de información de atracción -->
+  <div id="panel-info">
+    <button id="panel-info-cerrar" onclick="cerrarPanelInfo()">✕</button>
+    <img id="panel-info-logo" src="" alt="">
+    <ul id="panel-info-lista"></ul>
+  </div>
+
   <!-- Panel dev: cambiar MODO_DEV a false para producción -->
   <div id="dev-panel">
     <button onclick="mostrarCoordenadas()">📍 Ver coordenadas</button>
@@ -275,7 +373,7 @@
   <script type="module">
     import { Viewer } from '@photo-sphere-viewer/core';
     import { MarkersPlugin } from '@photo-sphere-viewer/markers-plugin';
-    import { escenas, marcadorHTML, gifHTML } from './datos.js';
+    import { escenas, marcadorHTML, gifHTML, paneles } from './datos.js';
 
     // ← cambiar a false para producción
     const MODO_DEV = true;
@@ -320,6 +418,27 @@
       }, 300);
     }
 
+    const panelInfo = document.getElementById('panel-info');
+    const panelInfoLogo = document.getElementById('panel-info-logo');
+    const panelInfoLista = document.getElementById('panel-info-lista');
+
+    function actualizarPanelInfo(escenaId) {
+      const panel = paneles.find((p) => p.id === escenaId);
+      if (!panel) {
+        panelInfo.classList.remove('visible');
+        return;
+      }
+      panelInfoLogo.src = panel.logo;
+      panelInfoLista.innerHTML = panel.caracteristicas
+        .map((c) => `<li>${c}</li>`)
+        .join('');
+      panelInfo.classList.add('visible');
+    }
+
+    window.cerrarPanelInfo = function() {
+      panelInfo.classList.remove('visible');
+    };
+
     const historial = [];
     let escenaActual = primeraEscena();
 
@@ -343,6 +462,7 @@
     viewer.addEventListener('ready', () => {
       ocultarLoader(intervaloInicial);
       actualizarBotones();
+      actualizarPanelInfo(escenaActual);
     });
 
     function actualizarBotones() {
@@ -353,12 +473,14 @@
 
     function navegarA(escenaId) {
       const escena = escenas[escenaId];
+      panelInfo.classList.remove('visible');
       const intervalo = mostrarLoader(escenaId);
       viewer.setPanorama(escena.panorama, {
         position: { yaw: escena.defaultYaw, pitch: escena.defaultPitch },
       }).then(() => {
         markersPlugin.setMarkers(escena.markers);
         ocultarLoader(intervalo);
+        actualizarPanelInfo(escenaId);
       });
     }
 
