@@ -174,9 +174,9 @@ export const escenas = {
         anchor: 'left center',
       },
       {
-        id: 'e01-a-e52',
+        id: 'e01-a-e150',
         position: { yaw: '294.67deg', pitch: '-34.10deg' },
-        html: marcadorHTML('Mirador de Topocoro', 'e52', 'derecha', iconoE01),
+        html: marcadorHTML('Mirador de Topocoro', 'e150', 'derecha', iconoE01),
         size: { width: 320, height: 80 },
         anchor: 'left center',
       },
@@ -208,6 +208,34 @@ export const escenas = {
     defaultYaw: '159.61deg',
     defaultPitch: '-30.30deg',
     markers: [],
+  },
+  e150: {
+    panorama: 'fotos/Aereas/150.jpg',
+    defaultYaw: '62.27deg',
+    defaultPitch: '-8.19deg',
+    markers: [
+      {
+        id: 'e150-a-e50',
+        position: { yaw: '87.64deg', pitch: '-2.75deg' },
+        html: gifHTML('e50'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e150-a-e52',
+        position: { yaw: '71.87deg', pitch: '-9.71deg' },
+        html: gifHTML('e52'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e150-a-e54',
+        position: { yaw: '38.30deg', pitch: '-10.24deg' },
+        html: gifHTML('e54'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
   },
   e88: {
     panorama: 'fotos/AquaKids/88.jpg',
@@ -726,8 +754,8 @@ export const escenas = {
   },
   e50: {
     panorama: 'fotos/Mirador/50.jpg',
-    defaultYaw: '47.04deg',
-    defaultPitch: '-4.43deg',
+    defaultYaw: '2.67deg',
+    defaultPitch: '-6.14deg',
     markers: [
       {
         id: 'e50-a-e51',
