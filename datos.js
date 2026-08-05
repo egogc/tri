@@ -84,6 +84,15 @@ export const paneles = [
       'Caída de agua',
     ],
   },
+  {
+    id: 'e110',
+    logo: 'fotos/racer.webp',
+    caracteristicas: [
+      '2 toboganes de caída libre',
+      '1 tobogán de carreras',
+      '8 metros de altura',
+    ],
+  },
 ];
 
 // pin.gif mide 50x80px, pero el contenido visible (la punta del pin)
@@ -110,7 +119,7 @@ export const escenas = {
       },
       {
         id: 'e01-a-e02',
-        position: { yaw: '234.07deg', pitch: '-52.98deg' },
+        position: { yaw: '233.51deg', pitch: '-46.62deg' },
         html: marcadorHTML('Entrada vehicular', 'e02', 'derecha', iconoE01),
         size: { width: 320, height: 80 },
         anchor: 'left center',
@@ -185,7 +194,20 @@ export const escenas = {
         size: { width: 320, height: 80 },
         anchor: 'left center',
       },
+      {
+        id: 'e01-a-e130',
+        position: { yaw: '355.21deg', pitch: '-52.25deg' },
+        html: marcadorHTML('Canchas Multiples', 'e130', 'derecha', iconoE01),
+        size: { width: 320, height: 80 },
+        anchor: 'left center',
+      },
     ],
+  },
+  e130: {
+    panorama: 'fotos/Aereas/130.jpg',
+    defaultYaw: '159.61deg',
+    defaultPitch: '-30.30deg',
+    markers: [],
   },
   e88: {
     panorama: 'fotos/AquaKids/88.jpg',
@@ -810,6 +832,13 @@ export const escenas = {
         id: 'e100-a-e92',
         position: { yaw: '261.00deg', pitch: '-2.45deg' },
         html: gifHTML('e92'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e100-a-e130',
+        position: { yaw: '25.79deg', pitch: '5.05deg' },
+        html: gifHTML('e130', null, iconoAerea),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
