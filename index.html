@@ -299,6 +299,16 @@
       color: #76B82A;
     }
 
+    /* estilo original del panel (fondo verde sólido, letra blanca),
+       reservado para el panel de Twister (e18) */
+    #panel-info.panel-clasico {
+      background: #76B82A;
+      color: white;
+    }
+    #panel-info.panel-clasico #panel-info-lista li::marker {
+      color: white;
+    }
+
     @media (max-width: 600px) {
       #panel-info {
         top: 20px;
@@ -428,6 +438,7 @@
         panelInfo.classList.remove('visible');
         return;
       }
+      panelInfo.classList.toggle('panel-clasico', !!panel.clasico);
       panelInfoLogo.src = panel.logo;
       panelInfoLista.innerHTML = panel.caracteristicas
         .map((c) => `<li>${c}</li>`)

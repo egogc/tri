@@ -67,6 +67,7 @@ export const paneles = [
   {
     id: 'e18',
     logo: 'fotos/twister.webp',
+    clasico: true,
     caracteristicas: [
       '4 Toboganes',
       'Giros en embudo',
@@ -340,8 +341,8 @@ export const escenas = {
     markers: [
       {
         id: 'e02-a-e03',
-        position: { yaw: '230.99deg', pitch: '-3.85deg' },
-        html: gifHTML('e03'),
+        position: { yaw: '227.52deg', pitch: '1.55deg' },
+        html: gifHTML('e03', null, iconoAerea),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -514,9 +515,9 @@ export const escenas = {
     defaultPitch: '0.28deg',
     markers: [
       {
-        id: 'e09-a-e07',
+        id: 'e09-a-e08',
         position: { yaw: '28.15deg', pitch: '-6.73deg' },
-        html: gifHTML('e07'),
+        html: gifHTML('e08'),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -535,9 +536,9 @@ export const escenas = {
     defaultPitch: '0deg',
     markers: [
       {
-        id: 'e11-a-e07',
+        id: 'e11-a-e09',
         position: { yaw: '6.69deg', pitch: '-1.16deg' },
-        html: gifHTML('e07'),
+        html: gifHTML('e09'),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1404,6 +1405,13 @@ export const escenas = {
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
+      {
+        id: 'e23-a-e22',
+        position: { yaw: '29.36deg', pitch: '-2.77deg' },
+        html: gifHTML('e22'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
     ],
   },
   e24: {
@@ -1485,6 +1493,13 @@ export const escenas = {
         id: 'e30-a-e31',
         position: { yaw: '210.06deg', pitch: '-4.76deg' },
         html: gifHTML('e31'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e30-a-e23',
+        position: { yaw: '40.65deg', pitch: '-5.52deg' },
+        html: gifHTML('e23'),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
