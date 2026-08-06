@@ -105,6 +105,9 @@ const iconoE01 = { normal: 'fotos/pin.gif', hover: 'fotos/pin2.png', width: 50, 
 // marcadores hacia tomas aéreas (fuera de e01): mismo icono normal, hover circle5.png
 const iconoAerea = { normal: 'fotos/circle.gif', hover: 'fotos/circle5.png', width: 50, height: 50 };
 
+// marcadores que atraviesan una puerta: mismo icono normal, hover circle6.png
+const iconoPuerta = { normal: 'fotos/circle.gif', hover: 'fotos/circle6.png', width: 50, height: 50 };
+
 export const escenas = {
   e01: {
     panorama: 'fotos/Aereas/01.jpg',
@@ -405,7 +408,7 @@ export const escenas = {
       {
         id: 'e05-a-e06',
         position: { yaw: '355.15deg', pitch: '-3.34deg' },
-        html: gifHTML('e06'),
+        html: gifHTML('e06', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -426,7 +429,7 @@ export const escenas = {
       {
         id: 'e05-a-e07',
         position: { yaw: '301.29deg', pitch: '-2.06deg' },
-        html: gifHTML('e07'),
+        html: gifHTML('e07', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -482,7 +485,7 @@ export const escenas = {
       {
         id: 'e07-a-e05',
         position: { yaw: '130.49deg', pitch: '-3.14deg' },
-        html: gifHTML('e05'),
+        html: gifHTML('e05', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -546,13 +549,20 @@ export const escenas = {
   },
   e12: {
     panorama: 'fotos/Yariguies/12.jpg',
-    defaultYaw: '0deg',
-    defaultPitch: '0deg',
+    defaultYaw: '279.72deg',
+    defaultPitch: '-3.96deg',
     markers: [
       {
         id: 'e12-a-e13',
         position: { yaw: '220.22deg', pitch: '-4.18deg' },
         html: gifHTML('e13'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e12-a-e07',
+        position: { yaw: '310.76deg', pitch: '10.67deg' },
+        html: gifHTML('e07', 'arriba'),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -581,6 +591,13 @@ export const escenas = {
         id: 'e14-a-e15',
         position: { yaw: '319.39deg', pitch: '-6.79deg' },
         html: gifHTML('e15'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e14-a-e13',
+        position: { yaw: '35.31deg', pitch: '-4.26deg' },
+        html: gifHTML('e13'),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -643,7 +660,7 @@ export const escenas = {
       {
         id: 'e17-a-e35',
         position: { yaw: '65.65deg', pitch: '-3.54deg' },
-        html: gifHTML('e35'),
+        html: gifHTML('e35', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1303,7 +1320,7 @@ export const escenas = {
       {
         id: 'e20-a-e21',
         position: { yaw: '197.07deg', pitch: '-2.61deg' },
-        html: gifHTML('e21'),
+        html: gifHTML('e21', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1364,37 +1381,37 @@ export const escenas = {
     defaultPitch: '-8.30deg',
     markers: [
       {
-        id: 'e23-a-e24',
-        position: { yaw: '355.40deg', pitch: '-6.40deg' },
-        html: gifHTML('e24'),
-        size: { width: 320, height: 50 },
-        anchor: 'left center',
-      },
-      {
-        id: 'e23-a-e25',
-        position: { yaw: '267.62deg', pitch: '-5.20deg' },
-        html: gifHTML('e25'),
-        size: { width: 320, height: 50 },
-        anchor: 'left center',
-      },
-      {
         id: 'e23-a-e26',
-        position: { yaw: '259.41deg', pitch: '-5.37deg' },
-        html: gifHTML('e26'),
+        position: { yaw: '355.40deg', pitch: '-6.40deg' },
+        html: gifHTML('e26', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
       {
         id: 'e23-a-e27',
-        position: { yaw: '240.90deg', pitch: '-2.57deg' },
-        html: gifHTML('e27'),
+        position: { yaw: '267.62deg', pitch: '-5.20deg' },
+        html: gifHTML('e27', null, iconoPuerta),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e23-a-e28',
+        position: { yaw: '259.41deg', pitch: '-5.37deg' },
+        html: gifHTML('e28', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
       {
         id: 'e23-a-e29',
+        position: { yaw: '240.90deg', pitch: '-2.57deg' },
+        html: gifHTML('e29', null, iconoPuerta),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e23-a-e25',
         position: { yaw: '5.37deg', pitch: '-7.29deg' },
-        html: gifHTML('e29'),
+        html: gifHTML('e25', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1407,8 +1424,15 @@ export const escenas = {
       },
       {
         id: 'e23-a-e22',
-        position: { yaw: '29.36deg', pitch: '-2.77deg' },
+        position: { yaw: '35.09deg', pitch: '-3.70deg' },
         html: gifHTML('e22'),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+      {
+        id: 'e23-a-e24',
+        position: { yaw: '12.38deg', pitch: '-4.82deg' },
+        html: gifHTML('e24', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1422,7 +1446,7 @@ export const escenas = {
       {
         id: 'e24-a-e23',
         position: { yaw: '162.76deg', pitch: '-7.02deg' },
-        html: gifHTML('e23'),
+        html: gifHTML('e23', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1436,7 +1460,7 @@ export const escenas = {
       {
         id: 'e25-a-e23',
         position: { yaw: '160.71deg', pitch: '-4.77deg' },
-        html: gifHTML('e23'),
+        html: gifHTML('e23', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1450,7 +1474,7 @@ export const escenas = {
       {
         id: 'e26-a-e23',
         position: { yaw: '102.62deg', pitch: '-5.14deg' },
-        html: gifHTML('e23'),
+        html: gifHTML('e23', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1464,7 +1488,21 @@ export const escenas = {
       {
         id: 'e27-a-e23',
         position: { yaw: '160.84deg', pitch: '-4.26deg' },
-        html: gifHTML('e23'),
+        html: gifHTML('e23', null, iconoPuerta),
+        size: { width: 320, height: 50 },
+        anchor: 'left center',
+      },
+    ],
+  },
+  e28: {
+    panorama: 'fotos/Spa/28.jpg',
+    defaultYaw: '0deg',
+    defaultPitch: '0deg',
+    markers: [
+      {
+        id: 'e28-a-e23',
+        position: { yaw: '98.38deg', pitch: '-3.97deg' },
+        html: gifHTML('e23', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1478,7 +1516,7 @@ export const escenas = {
       {
         id: 'e29-a-e23',
         position: { yaw: '148.18deg', pitch: '-3.23deg' },
-        html: gifHTML('e23'),
+        html: gifHTML('e23', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1520,14 +1558,14 @@ export const escenas = {
       {
         id: 'e31-a-e34',
         position: { yaw: '95.47deg', pitch: '-10.28deg' },
-        html: gifHTML('e34'),
+        html: gifHTML('e34', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
       {
         id: 'e31-a-e33',
         position: { yaw: '112.18deg', pitch: '-5.38deg' },
-        html: gifHTML('e33'),
+        html: gifHTML('e33', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1555,14 +1593,14 @@ export const escenas = {
       {
         id: 'e32-a-e33',
         position: { yaw: '49.38deg', pitch: '-4.57deg' },
-        html: gifHTML('e33'),
+        html: gifHTML('e33', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
       {
         id: 'e32-a-e34',
         position: { yaw: '25.60deg', pitch: '-4.30deg' },
-        html: gifHTML('e34'),
+        html: gifHTML('e34', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
@@ -1583,7 +1621,7 @@ export const escenas = {
       {
         id: 'e32-a-e17',
         position: { yaw: '282.06deg', pitch: '-4.16deg' },
-        html: gifHTML('e17'),
+        html: gifHTML('e17', null, iconoPuerta),
         size: { width: 320, height: 50 },
         anchor: 'left center',
       },
